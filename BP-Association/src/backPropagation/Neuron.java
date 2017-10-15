@@ -29,6 +29,10 @@ public class Neuron {
 		}
 	}
 	
+	public int getID() {
+		return neuronID;
+	}
+	
 	public void connectBiasNeuron(Neuron biasNeuron) {
 		Connection biasConnection = new Connection(biasNeuron, this);
 		inputConnections.add(biasConnection);

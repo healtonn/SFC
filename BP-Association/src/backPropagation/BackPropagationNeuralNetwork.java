@@ -27,7 +27,6 @@ public class BackPropagationNeuralNetwork {
 		
 		createNeuralNetwork();
 		initializeWeights();
-		
 	}
 	
 	public void initializeWeights() {
@@ -88,6 +87,8 @@ public class BackPropagationNeuralNetwork {
 	public void assignRandomWeight(Connection connection) {
 		double weight = generateWeight();
 		connection.setWeight(weight);
+		System.out.println("spojeni neuronu s id: " + connection.leftNeuron.getID() + " a neuronu s id: " + connection.rightNeuron.getID() +
+				" s vahou: " + connection.getWeight());
 	}
 	
 	public double generateWeight() {
