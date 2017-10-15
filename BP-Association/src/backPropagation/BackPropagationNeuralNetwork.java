@@ -1,11 +1,15 @@
 package backPropagation;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BackPropagationNeuralNetwork {
 	public static final int INPUT_LAYER = 0;
 	public static final int HIDDEN_LAYER = 1;
 	public static final int OUTPUT_LAYER = 2;
+	
+	public static final double LOWER_WEIGHT = -0.5;
+	public static final double UPPER_WEIGHT = 0.5;
 	
 	/**
 	 * based on info said at SFC lecture, BP network should have one input, one hidden and one output layer
@@ -22,6 +26,31 @@ public class BackPropagationNeuralNetwork {
 		networksize = new int[] {inputNeurons, hiddenNeurons, outputNeurons};
 		
 		createNeuralNetwork();
+		initializeWeights();
+		
+	}
+	
+	public void initializeWeights() {
+		initHiddenLayerWeight();
+		initOutputLayerWeight();
+	}
+	
+	public void initHiddenLayerWeight() {
+		for (Neuron hiddenNeuron: hiddenLayer) {
+			ArrayList<Connection> inputConnections = hiddenNeuron.getConnections();
+			for (Connection connection: inputConnections) {
+				assignRandomWeight(connection);
+			}
+		}
+	}
+	
+	public void initOutputLayerWeight() {
+		for (Neuron outputNeuron: outputLayer) {
+			ArrayList<Connection> inputConnections = outputNeuron.getConnections();
+			for (Connection connection: inputConnections) {
+				assignRandomWeight(connection);
+			}
+		}
 	}
 	
 	public void createNeuralNetwork() {
@@ -54,6 +83,16 @@ public class BackPropagationNeuralNetwork {
 			outputNeuron.connectBiasNeuron(biasNeuron);
 			outputLayer.add(outputNeuron);
 		}
+	}
+	
+	public void assignRandomWeight(Connection connection) {
+		double weight = generateWeight();
+		connection.setWeight(weight);
+	}
+	
+	public double generateWeight() {
+		Random random = new Random();
+		return LOWER_WEIGHT + (UPPER_WEIGHT - LOWER_WEIGHT) * random.nextDouble();
 	}
 	
 }

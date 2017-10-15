@@ -34,4 +34,8 @@ public class Neuron {
 		inputConnections.add(biasConnection);
 		this.biasConnection = biasConnection;
 	}
+	
+	public ArrayList<Connection> getConnections() {
+		return inputConnections;
+	}
 }

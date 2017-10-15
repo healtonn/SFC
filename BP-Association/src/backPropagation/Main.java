@@ -3,7 +3,7 @@ package backPropagation;
 public class Main {
 
 	public static void main(String[] args) {
-		int inputNeurons = 10;
+		int inputNeurons = 6;
 		int hiddenNeurons = 4;
 		int outputNeurons = 2;
 		
