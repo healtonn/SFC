@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Neuron {
-	private ArrayList<Connection> inputConnections = new ArrayList<Connection>();
-	private Map<Integer, Connection> connectionMap = new HashMap<Integer, Connection>();
+	public ArrayList<Connection> inputConnections = new ArrayList<Connection>();	
+	//this hashmap contains same info as inputConnections, except here is not bias neuron listed, might be redundant
+	public Map<Integer, Connection> connectionMap = new HashMap<Integer, Connection>();
 	private Connection biasConnection;			//this doesn't need to be inside the connection map
 	private final int neuronID;
+	private double output;
 	
-	protected static final double bias = 1.0;       	//creating its own subclass didn't work well, so just use variable
+	protected static final double bias = 1.0;       	//creating its own subclass didn't work well, so just use static variable
 	protected static int numberOfNeurons = 0;
 	
 	public Neuron() {
@@ -31,6 +33,18 @@ public class Neuron {
 	
 	public int getID() {
 		return neuronID;
+	}
+	
+	public ArrayList<Connection> getInputConnections(){
+		return inputConnections;
+	}
+	
+	public void setOutput(double newOutput) {
+		output = newOutput;
+	}
+	
+	public double getOutput() {
+		return output;
 	}
 	
 	public void connectBiasNeuron(Neuron biasNeuron) {

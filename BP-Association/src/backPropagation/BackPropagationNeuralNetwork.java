@@ -8,25 +8,44 @@ public class BackPropagationNeuralNetwork {
 	public static final int HIDDEN_LAYER = 1;
 	public static final int OUTPUT_LAYER = 2;
 	
+	// Specifies number of neurons in each layer
+	public static final int INPUT_NEURONS = 64;		//must be 64 because numbers are stored in 8x8 matrix	
+	public static final int HIDDEN_NEURONS = 50;
+	public static final int OUTPUT_NEURONS = 4;
+	
+	//interval to generate weights is <-0,5;0,5>
 	public static final double LOWER_WEIGHT = -0.5;
 	public static final double UPPER_WEIGHT = 0.5;
-	
-	/**
-	 * based on info said at SFC lecture, BP network should have one input, one hidden and one output layer
-	 */
+
+	//based on info said at SFC lecture, BP network should have one input, one hidden and one output layer
 	final ArrayList<Neuron> inputLayer = new ArrayList<Neuron>();
 	final ArrayList<Neuron> hiddenLayer = new ArrayList<Neuron>();
 	final ArrayList<Neuron> outputLayer = new ArrayList<Neuron>();
+	
+	static ArrayList<double[]> trainingInput;
+	static double[][] expectedOutput;
 	
 	final int[] networksize;
 
 	final Neuron biasNeuron = new Neuron();
 	
-	public BackPropagationNeuralNetwork(int inputNeurons, int hiddenNeurons, int outputNeurons) {
-		networksize = new int[] {inputNeurons, hiddenNeurons, outputNeurons};
+	public BackPropagationNeuralNetwork() {
+		networksize = new int[] {INPUT_NEURONS, HIDDEN_NEURONS, OUTPUT_NEURONS};
 		
 		createNeuralNetwork();
 		initializeWeights();
+		trainingInput = DataHandler.loadTrainingData();
+		expectedOutput = DataHandler.loadExpectedResults();
+	}
+	
+	public void start() {
+		/*
+		 *  for (dokud jsou vyorky tak){
+		 *  	naucsit(param1-vzorek1, param2-vzorek2){
+		 *  		
+		 *  	}
+		 *  }
+		 */
 	}
 	
 	public void initializeWeights() {
@@ -87,8 +106,6 @@ public class BackPropagationNeuralNetwork {
 	public void assignRandomWeight(Connection connection) {
 		double weight = generateWeight();
 		connection.setWeight(weight);
-		System.out.println("spojeni neuronu s id: " + connection.leftNeuron.getID() + " a neuronu s id: " + connection.rightNeuron.getID() +
-				" s vahou: " + connection.getWeight());
 	}
 	
 	public double generateWeight() {
