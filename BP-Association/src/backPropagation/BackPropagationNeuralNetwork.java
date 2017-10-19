@@ -24,9 +24,8 @@ public class BackPropagationNeuralNetwork {
 	
 	static ArrayList<double[]> trainingInput;
 	static double[][] expectedOutput;
-	
+	static double[] currentOutput;
 	final int[] networksize;
-
 	final Neuron biasNeuron = new Neuron();
 	
 	public BackPropagationNeuralNetwork() {
@@ -38,6 +37,9 @@ public class BackPropagationNeuralNetwork {
 		expectedOutput = DataHandler.loadExpectedResults();
 	}
 	
+	/**
+	 * Main program
+	 */
 	public void start() {
 		/*
 		 *  for (dokud jsou vyorky tak){
@@ -46,8 +48,61 @@ public class BackPropagationNeuralNetwork {
 		 *  	}
 		 *  }
 		 */
+		for (int i = 0; i < trainingInput.size(); i++) {			//for all training samples
+			double[] inputVector = trainingInput.get(i);
+			double[] expectedVector = expectedOutput[i];
+			
+			initNeurons(inputVector);
+			calculateOutput();
+			currentOutput = getCurrentNetworkOutput();
+		}
 	}
 	
+	/**
+	 * This function takes array of doubles as input vector and applies each single value into each single neuron
+	 */
+	public void initNeurons(double [] inputSample) {
+		for (int i = 0; i < inputLayer.size(); i++) {
+			inputLayer.get(i).setOutput(inputSample[i]);
+		}
+	}
+	
+	/**
+	 * ...each neuron has linear base functions and continuous activation function...
+	 * first calculate hidden layer, then output layer
+	 */
+	public void calculateOutput() {
+		calculateHiddenLayer();
+		calculateOutputLayer();
+	}
+	
+	/**
+	 * @return output vector of current run
+	 */
+	public double[] getCurrentNetworkOutput() {
+		double[] currentOutput = new double[outputLayer.size()];
+		
+		for (int i = 0; i < outputLayer.size(); i++)
+			currentOutput[i] = outputLayer.get(i).getOutput();
+		
+		return currentOutput;
+	}
+	
+	public void calculateHiddenLayer() {
+		for (Neuron hiddenNeruon: hiddenLayer) {
+			hiddenNeruon.calculateOutput();
+		}
+	}
+	
+	public void calculateOutputLayer() {
+		for (Neuron outputNeuron: outputLayer) {
+			outputNeuron.calculateOutput();
+		}
+	}
+	
+	/**
+	 * Applies random weights onto connections between neurons
+	 */
 	public void initializeWeights() {
 		initHiddenLayerWeight();
 		initOutputLayerWeight();
@@ -71,8 +126,10 @@ public class BackPropagationNeuralNetwork {
 		}
 	}
 	
+	/**
+	 * create amout of neurons specified by predefined values and link them together - create network
+	 */
 	public void createNeuralNetwork() {
-		System.out.println("rozmery site jsou: " + networksize[0] + "," + networksize[1] + "," + networksize[2]);
 		createInputLayer();
 		createHiddenLayer();
 		createOutputLayer();

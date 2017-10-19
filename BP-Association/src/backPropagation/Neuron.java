@@ -31,6 +31,23 @@ public class Neuron {
 		}
 	}
 	
+	/**
+	 * calculate U = U + Wji * Xj(+ bias --- also bias might be needed?)
+	 */
+	public void calculateOutput() {
+		double newOutput = 0;
+		
+		for (Connection inputConnection: inputConnections)
+			newOutput += inputConnection.getLeftNeuron().getOutput() * inputConnection.getWeight();
+		
+		newOutput += biasConnection.getWeight() * bias;
+		output = calculateSigmoid(newOutput);
+	}
+	
+	public double calculateSigmoid(double input) {
+		return 1.0 / (1.0 + (Math.exp(-input)));
+	}
+	
 	public int getID() {
 		return neuronID;
 	}

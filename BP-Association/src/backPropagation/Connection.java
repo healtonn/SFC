@@ -19,5 +19,9 @@ public class Connection {
 	public double getWeight() {
 		return weight;
 	}
+	
+	public Neuron getLeftNeuron() {
+		return leftNeuron;
+	}
 
 }
