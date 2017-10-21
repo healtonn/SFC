@@ -18,7 +18,7 @@ public class BackPropagationNeuralNetwork {
 	public static final double UPPER_WEIGHT = 0.5;
 	
 	public static final double LEARNING_RATE = 0.5;
-	public static final double ACCURACY = 0.01;
+	public static final double ACCURACY = 0.000001;
 
 	//based on info said at SFC lecture, BP network should have one input, one hidden and one output layer
 	final ArrayList<Neuron> inputLayer = new ArrayList<Neuron>();
@@ -59,16 +59,17 @@ public class BackPropagationNeuralNetwork {
 				calculateOutput();
 				currentOutput = getCurrentNetworkOutput();
 				finalOutput[sampleIndex] = currentOutput;
-				networkError = calculateNetworkError(networkError, expectedVector);
-				//System.out.println("Network error: " + networkError);
+				networkError = calculateNetworkError(expectedVector);
+
 				backPropagation(expectedVector);
 			}
 			steps++;
 			
-			if (steps % 10000 == 0) {
+			/*if (steps % 1000 == 0) {
 				System.out.println("Current step: " + steps);
 				System.out.println("Network error: " + networkError);
-			}
+			}*/
+			
 		} while (networkError > ACCURACY && stepLimit > steps);
 		
 		System.out.println("steps used: " + steps);
@@ -153,14 +154,13 @@ public class BackPropagationNeuralNetwork {
 		return currentOutput;
 	}
 	
-	public double calculateNetworkError(double error, double[] expectedOutputVector) {
-		double tmpError;
+	public double calculateNetworkError(double[] expectedOutputVector) {
+		double tmpError = 0;
 		for (int i = 0; i < trainingOutput[i].length; i++) {
-			tmpError = Math.pow(currentOutput[i] - expectedOutputVector[i], 2);
-			error += tmpError;
+			tmpError = 0.5 * Math.pow(expectedOutputVector[i] - currentOutput[i], 2);
 		}
 
-		return error;
+		return tmpError;
 	}
 	
 	public void calculateHiddenLayer() {
