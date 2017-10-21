@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Neuron {
 	public ArrayList<Connection> inputConnections = new ArrayList<Connection>();	
-	//this hashmap contains same info as inputConnections, except here is not bias neuron listed, might be redundant
+	//this hashmap is used to get out-coming connections from hidden neuron to output neurons
 	public Map<Integer, Connection> connectionMap = new HashMap<Integer, Connection>();
 	private Connection biasConnection;			//this doesn't need to be inside the connection map
 	private final int neuronID;
@@ -56,6 +56,10 @@ public class Neuron {
 		return inputConnections;
 	}
 	
+	public Connection getConnection(int neuronID) {
+		return connectionMap.get(neuronID);
+	}
+	
 	public void setOutput(double newOutput) {
 		output = newOutput;
 	}
@@ -68,9 +72,5 @@ public class Neuron {
 		Connection biasConnection = new Connection(biasNeuron, this);
 		inputConnections.add(biasConnection);
 		this.biasConnection = biasConnection;
-	}
-	
-	public ArrayList<Connection> getConnections() {
-		return inputConnections;
 	}
 }

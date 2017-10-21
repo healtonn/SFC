@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class DataHandler {
+	public static final int NUMBER_OF_ELEMENTS_TO_ASSOCIATE = 10;
+	
 	/*
 	 * 4 neurons in output layer will be presenting bit-like results representing associated numbers
 	 */
@@ -41,15 +43,6 @@ public class DataHandler {
 		trainingData.add(loadseven());
 		trainingData.add(loadeight());
 		trainingData.add(loadnine());
-		
-		for(double[]pokus : trainingData) {
-			System.out.println("cislo:");
-			for (int i = 0; i < DATA_MATRIX_SIZE; i++) {
-				System.out.print(pokus[i] + ",");
-				if (i % 8 == 7)
-					System.out.println();
-			}
-		}
 		
 		return trainingData;
 	}
@@ -92,6 +85,15 @@ public class DataHandler {
 		}
 		
 		return data;
+	}
+	
+	public static double[][] init2DArray(int arraySize){
+		double[][] array = new double[arraySize][];
+		for (int i = 0; i < arraySize; i++) {
+			array[i] = new double[] {0.0};
+		}
+		
+		return array;
 	}
 	
 	public static double[] loadzero() {
