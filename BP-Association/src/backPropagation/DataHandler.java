@@ -30,7 +30,7 @@ public class DataHandler {
 		return expectedResults;
 	}
 	
-	public static ArrayList<double[]> loadTrainingData(){
+	public static ArrayList<double[]> loadTrainingData() throws FileNotFoundException{
 		ArrayList<double[]> trainingData = new ArrayList<double[]>();
 		
 		trainingData.add(loadzero());
@@ -47,7 +47,7 @@ public class DataHandler {
 		return trainingData;
 	}
 	
-	public static double[] loadDataFromFile(String file) {
+	public static double[] loadDataFromFile(String file) throws FileNotFoundException {
 		double[] data = new double[DATA_MATRIX_SIZE];
 		int index = 0;
 		int number;
@@ -70,7 +70,7 @@ public class DataHandler {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw e;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,53 +96,53 @@ public class DataHandler {
 		return array;
 	}
 	
-	public static double[] loadzero() {
-		double[] zero = loadDataFromFile("data/0.txt");
+	public static double[] loadzero() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/0.txt");
 		return zero;
 	}
 	
-	public static double[] loadone() {
-		double[] zero = loadDataFromFile("data/1.txt");
+	public static double[] loadone() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/1.txt");
 		return zero;
 	}
 	
-	public static double[] loadtwo() {
-		double[] zero = loadDataFromFile("data/2.txt");
+	public static double[] loadtwo() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/2.txt");
 		return zero;
 	}
 	
-	public static double[] loadthree() {
-		double[] zero = loadDataFromFile("data/3.txt");
+	public static double[] loadthree() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/3.txt");
 		return zero;
 	}
 	
-	public static double[] loadfour() {
-		double[] zero = loadDataFromFile("data/4.txt");
+	public static double[] loadfour() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/4.txt");
 		return zero;
 	}
 	
-	public static double[] loadfive() {
-		double[] zero = loadDataFromFile("data/5.txt");
+	public static double[] loadfive() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/5.txt");
 		return zero;
 	}
 	
-	public static double[] loadsix() {
-		double[] zero = loadDataFromFile("data/6.txt");
+	public static double[] loadsix() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/6.txt");
 		return zero;
 	}
 	
-	public static double[] loadseven() {
-		double[] zero = loadDataFromFile("data/7.txt");
+	public static double[] loadseven() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/7.txt");
 		return zero;
 	}
 	
-	public static double[] loadeight() {
-		double[] zero = loadDataFromFile("data/8.txt");
+	public static double[] loadeight() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/8.txt");
 		return zero;
 	}
 	
-	public static double[] loadnine() {
-		double[] zero = loadDataFromFile("data/9.txt");
+	public static double[] loadnine() throws FileNotFoundException {
+		double[] zero = loadDataFromFile("data/learning samples/9.txt");
 		return zero;
 	}
 }

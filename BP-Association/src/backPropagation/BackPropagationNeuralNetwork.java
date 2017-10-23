@@ -1,7 +1,9 @@
 package backPropagation;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class BackPropagationNeuralNetwork {
 	public static final int INPUT_LAYER = 0;
@@ -19,6 +21,8 @@ public class BackPropagationNeuralNetwork {
 	
 	public static final double LEARNING_RATE = 0.5;
 	public static final double ACCURACY = 0.000001;
+	
+	public static final String EXIT = "exit";
 
 	//based on info said at SFC lecture, BP network should have one input, one hidden and one output layer
 	final ArrayList<Neuron> inputLayer = new ArrayList<Neuron>();
@@ -38,9 +42,13 @@ public class BackPropagationNeuralNetwork {
 		
 		createNeuralNetwork();
 		initializeWeights();
-		trainingInput = DataHandler.loadTrainingData();
-		trainingOutput = DataHandler.loadExpectedResults();
-		finalOutput = DataHandler.init2DArray(DataHandler.NUMBER_OF_ELEMENTS_TO_ASSOCIATE);
+		try {
+			trainingInput = DataHandler.loadTrainingData();
+			trainingOutput = DataHandler.loadExpectedResults();
+			finalOutput = DataHandler.init2DArray(DataHandler.NUMBER_OF_ELEMENTS_TO_ASSOCIATE);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -51,6 +59,7 @@ public class BackPropagationNeuralNetwork {
 		int steps = -1;
 		
 		do {
+			
 			for (int sampleIndex = 0; sampleIndex < trainingInput.size(); sampleIndex++) { //for all training samples
 				double[] inputVector = trainingInput.get(sampleIndex);
 				double[] expectedVector = trainingOutput[sampleIndex];
@@ -60,27 +69,58 @@ public class BackPropagationNeuralNetwork {
 				currentOutput = getCurrentNetworkOutput();
 				finalOutput[sampleIndex] = currentOutput;
 				networkError = calculateNetworkError(expectedVector);
-
 				backPropagation(expectedVector);
 			}
+			
 			steps++;
-			
-			/*if (steps % 1000 == 0) {
-				System.out.println("Current step: " + steps);
-				System.out.println("Network error: " + networkError);
-			}*/
-			
-		} while (networkError > ACCURACY && stepLimit > steps);
+		} while (networkError > ACCURACY && stepLimit > steps);		//once this finishes the network should be learned
 		
-		System.out.println("steps used: " + steps);
-		for (int i = 0; i < trainingInput.size(); i++) {
-			System.out.println("sample " + i + " : ");
-			for (int j = 0; j < finalOutput[i].length; j++) {
-				System.out.println("Final output: " + finalOutput[i][j]);
-			} 
+		printLearnedValues(steps);
+		//printConnectionsInfo();
+		
+		waitForInput();
+	}
+	
+	public void waitForInput(){
+		Scanner consoleScan = new Scanner(System.in);
+		String consoleInput = "";
+		double[] input = new double[OUTPUT_NEURONS];
+		
+		printConsoleHelp();
+		while(true) {
+			consoleInput = consoleScan.nextLine();
+			System.out.println("input: " + consoleInput);
+			if(consoleInput.toLowerCase().equals(EXIT))
+				break;
+			
+			try {
+				input = DataHandler.loadDataFromFile(consoleInput);
+			}
+			catch(FileNotFoundException e){
+				System.out.println("File not found: " + e);
+				continue;
+			}
+			
+			initNeurons(input);
+			calculateOutput();
+			currentOutput = getCurrentNetworkOutput();
+			
+			recognisePattern(currentOutput);
 		}
 		
-		//printConnectionsInfo();
+		consoleScan.close();
+	}
+	
+	public void recognisePattern(double[] pattern) {
+		System.out.println("result: ");
+		for (int i = 0; i < pattern.length; i++) {
+			System.out.println("final output: " + pattern[i]);
+		}
+	}
+	
+	public void printConsoleHelp() {
+		System.out.println("Input file location. Example: data/testing samples/1-0%.txt. File should contain 8x8 matrix of 'bits");
+		System.out.println("Type 'exit' to quit the application");
 	}
 	
 	public void backPropagation(double[] expectedVector) {
@@ -262,4 +302,15 @@ public class BackPropagationNeuralNetwork {
 			}
 		}
 	}
+	
+	public void printLearnedValues(int steps) {
+		System.out.println("steps used: " + steps);
+		for (int i = 0; i < trainingInput.size(); i++) {
+			System.out.println("sample " + i + " : ");
+			for (int j = 0; j < finalOutput[i].length; j++) {
+				System.out.println("Final output: " + finalOutput[i][j]);
+			} 
+		}
+	}
+	
 }
