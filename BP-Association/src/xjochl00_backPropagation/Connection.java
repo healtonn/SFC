@@ -1,4 +1,4 @@
-package backPropagation;
+package xjochl00_backPropagation;
 
 public class Connection {
 	final Neuron leftNeuron;

@@ -1,4 +1,4 @@
-package backPropagation;
+package xjochl00_backPropagation;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
