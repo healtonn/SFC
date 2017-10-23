@@ -12,7 +12,7 @@ public class BackPropagationNeuralNetwork {
 	
 	// Specifies number of neurons in each layer
 	public static final int INPUT_NEURONS = 64;		//must be 64 because numbers are stored in 8x8 matrix	
-	public static final int HIDDEN_NEURONS = 50;
+	public static final int HIDDEN_NEURONS = 40;
 	public static final int OUTPUT_NEURONS = 4;
 	
 	//interval to generate weights is <-0,5;0,5>
@@ -21,6 +21,12 @@ public class BackPropagationNeuralNetwork {
 	
 	public static final double LEARNING_RATE = 0.5;
 	public static final double ACCURACY = 0.000001;
+	
+	//for comparing bits in final result
+	public static final double BIT_THRESHOLD = 0.5;
+	public static final double BIT_ZERO = 0.0;
+	public static final double BIT_ONE = 1.0;
+	public static final double BIT_TWO = 2.0;
 	
 	public static final String EXIT = "exit";
 
@@ -75,7 +81,7 @@ public class BackPropagationNeuralNetwork {
 			steps++;
 		} while (networkError > ACCURACY && stepLimit > steps);		//once this finishes the network should be learned
 		
-		printLearnedValues(steps);
+		//printLearnedValues(steps);
 		//printConnectionsInfo();
 		
 		waitForInput();
@@ -112,15 +118,13 @@ public class BackPropagationNeuralNetwork {
 	}
 	
 	public void recognisePattern(double[] pattern) {
-		System.out.println("result: ");
+		int result = 0;
 		for (int i = 0; i < pattern.length; i++) {
-			System.out.println("final output: " + pattern[i]);
+			if(pattern[i] > BIT_THRESHOLD)		//bit is 1
+				result += Math.pow(BIT_TWO, pattern.length - i - 1);			//-1 so the exponent is correct
 		}
-	}
-	
-	public void printConsoleHelp() {
-		System.out.println("Input file location. Example: data/testing samples/1-0%.txt. File should contain 8x8 matrix of 'bits");
-		System.out.println("Type 'exit' to quit the application");
+		
+		System.out.println("Number recognised: " + result);
 	}
 	
 	public void backPropagation(double[] expectedVector) {
@@ -311,6 +315,11 @@ public class BackPropagationNeuralNetwork {
 				System.out.println("Final output: " + finalOutput[i][j]);
 			} 
 		}
+	}
+	
+	public void printConsoleHelp() {
+		System.out.println("Input file location. Example: data/testing samples/1-0.txt. File should contain 8x8 matrix of 'bits");
+		System.out.println("Type 'exit' to quit the application");
 	}
 	
 }
