@@ -160,10 +160,7 @@ public class DataHandler {
 			System.out.println("This is not valid argument. Number must be positive integer. Using default value...");
 			steps = NUMBER_OF_STEPS;
 		}
-		
-		System.out.println("pocet kroku: " + argv[0]);
-		
-		System.out.println("test: " + steps);
+
 		return steps;
 	}
 }

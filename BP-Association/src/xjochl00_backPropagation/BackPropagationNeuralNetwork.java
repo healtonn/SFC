@@ -40,7 +40,7 @@ public class BackPropagationNeuralNetwork {
 	static double[][] finalOutput;
 	static double[] currentOutput;
 	final int[] networksize;
-	static double learningRate = LEARNING_RATE; //"mí" in greece alphabet
+	static double learningRate = LEARNING_RATE; //"mi" in greece alphabet
 	final Neuron biasNeuron = new Neuron();
 	
 	public BackPropagationNeuralNetwork() {
@@ -95,7 +95,7 @@ public class BackPropagationNeuralNetwork {
 		printConsoleHelp();
 		while(true) {
 			consoleInput = consoleScan.nextLine();
-			System.out.println("input: " + consoleInput);
+
 			if(consoleInput.toLowerCase().equals(EXIT))
 				break;
 			
@@ -318,7 +318,7 @@ public class BackPropagationNeuralNetwork {
 	}
 	
 	public void printConsoleHelp() {
-		System.out.println("Input file location. Example: data/testing samples/1-0.txt. File should contain 8x8 matrix of 'bits");
+		System.out.println("Input file location. Example: data/testing samples/1-0.txt. File should contain 8x8 matrix of 'bits'");
 		System.out.println("Type 'exit' to quit the application");
 	}
 	
