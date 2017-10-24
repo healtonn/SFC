@@ -20,7 +20,7 @@ public class BackPropagationNeuralNetwork {
 	public static final double UPPER_WEIGHT = 0.5;
 	
 	public static final double LEARNING_RATE = 0.5;
-	public static final double ACCURACY = 0.000001;
+	public static final double ACCURACY = 0.00001;
 	
 	//for comparing bits in final result
 	public static final double BIT_THRESHOLD = 0.5;

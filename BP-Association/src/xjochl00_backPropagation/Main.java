@@ -9,7 +9,8 @@ package xjochl00_backPropagation;
 public class Main {
 
 	public static void main(String[] args) {
-		int steps = 40000;
+		int steps = DataHandler.setSteps(args);
+		
 		BackPropagationNeuralNetwork association = new BackPropagationNeuralNetwork();
 		association.start(steps);
 	}

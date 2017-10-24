@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class DataHandler {
 	public static final int NUMBER_OF_ELEMENTS_TO_ASSOCIATE = 10;
+	public static final int NUMBER_OF_STEPS = 40000;
 	
 	/*
 	 * 4 neurons in output layer will be presenting bit-like results representing associated numbers
@@ -144,5 +145,25 @@ public class DataHandler {
 	public static double[] loadnine() throws FileNotFoundException {
 		double[] zero = loadDataFromFile("data/learning samples/9.txt");
 		return zero;
+	}
+	
+	public static int setSteps(String[] argv) {
+		int steps = 0;
+		
+		if(argv.length == 0)
+			return NUMBER_OF_STEPS;
+		
+		try {
+			steps = Math.abs(Integer.parseInt(argv[0]));
+		}
+		catch(NumberFormatException e){
+			System.out.println("This is not valid argument. Number must be positive integer. Using default value...");
+			steps = NUMBER_OF_STEPS;
+		}
+		
+		System.out.println("pocet kroku: " + argv[0]);
+		
+		System.out.println("test: " + steps);
+		return steps;
 	}
 }
